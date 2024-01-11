@@ -1,12 +1,12 @@
-// ignore_for_file: file_names, unused_element
-
-import 'dart:convert';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: file_names, unused_element, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_drawing_board/paint_extension.dart';
+import 'pdf_api.dart';
+import 'pdf_view.dart';
 
 //  Triangle draw
 class Triangle extends PaintContent {
@@ -74,8 +74,10 @@ class Triangle extends PaintContent {
 }
 
 class WhiteBoard extends StatefulWidget {
-  const WhiteBoard({Key? key, this.background}) : super(key: key);
-  final Widget? background;
+  const WhiteBoard({
+    Key? key,
+  }) : super(key: key);
+  static const String id = 'White Board';
   @override
   State<WhiteBoard> createState() => _WhiteBoardState();
 }
@@ -95,8 +97,20 @@ class _WhiteBoardState extends State<WhiteBoard> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Drawing Test'),
+        title: const Text('WhiteBoard'),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.file_copy),
+            onPressed: () async {
+              final file = await getPathPDF.pickFile();
+              if (file == null) return;
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PdfView(file: file)),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[

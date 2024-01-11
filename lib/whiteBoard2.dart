@@ -11,6 +11,8 @@ import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_drawing_board/paint_extension.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
+import 'custom_listview_pdf.dart';
+
 class Triangle extends PaintContent {
   Triangle();
 
@@ -78,11 +80,13 @@ class Triangle extends PaintContent {
 class WhiteBoard2 extends StatefulWidget {
   const WhiteBoard2({
     Key? key,
-    this.background,
+    required this.totalPage,
     required this.file,
   }) : super(key: key);
-  final Widget? background;
+  final int totalPage;
   final File file;
+
+  static const String id = 'White Board with pdf';
   @override
   State<WhiteBoard2> createState() => _WhiteBoard2State();
 }
@@ -114,21 +118,10 @@ class _WhiteBoard2State extends State<WhiteBoard2> {
                 return DrawingBoard(
                   // boardPanEnabled: false,
                   controller: _drawingController,
-                  background: Container(
-                    width: constraints.maxWidth,
-                    height: 1000,
-                    child: PDFView(
-                      filePath: widget.file.path,
-                      autoSpacing: false,
-                      swipeHorizontal: false,
-                      pageSnap: false,
-                      pageFling: false,
-                      onRender: (pages) {
-                        setState(() => this.pages = pages!);
-                        print('sssssssssssssssssssss=============${pages}');
-                      },
-                    ),
-                  ),
+                  background: ListPdfPage(
+                      file: widget.file,
+                      width: constraints.maxWidth,
+                      pages: widget.totalPage)!,
                   showDefaultActions: true,
                   showDefaultTools: true,
                   defaultToolsBuilder: (Type t, _) {
