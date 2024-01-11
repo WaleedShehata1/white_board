@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_brace_in_string_interps, avoid_print
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_brace_in_string_interps, avoid_print, use_build_context_synchronously
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _PdfViewState extends State<PdfView> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.change_circle),
+          icon: const Icon(Icons.change_circle),
           onPressed: () async {
             final file = await getPathPDF.pickFile();
 
@@ -36,7 +36,7 @@ class _PdfViewState extends State<PdfView> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.done),
+            icon: const Icon(Icons.done),
             onPressed: () async {
               Navigator.of(context).push(
                 MaterialPageRoute(

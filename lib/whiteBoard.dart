@@ -101,7 +101,7 @@ class _WhiteBoardState extends State<WhiteBoard> {
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         actions: [
           IconButton(
-            icon: Icon(Icons.file_copy),
+            icon: const Icon(Icons.file_copy),
             onPressed: () async {
               final file = await getPathPDF.pickFile();
               if (file == null) return;
